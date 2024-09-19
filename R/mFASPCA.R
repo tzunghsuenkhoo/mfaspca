@@ -191,6 +191,13 @@
 #'   \item{sigma2}{The estimated measurement error variance.}
 #'   \item{estVar}{The estimated smooth
 #'   variance function of the data.}
+#'@references  Happ, C. (2021). Multivariate functional principal component
+#'   analysis for data observed on different dimensional domains, R package version
+#'   Di, C., Crainiceanu, C., Caffo, B., and Punjabi, N. (2009).
+#'   Multilevel functional principal component analysis. Annals of Applied
+#'   Statistics, 3, 458--488. Yao, F., Mueller, H.-G., and Wang, J.-L. (2005).
+#'   Functional data analysis for sparse longitudinal data. Journal of the
+#'   American Statistical Association, 100, 577--590.
 PACE_S <- function(funDataObject, W, predData = NULL, nbasis = 10, pve = 0.99, npc = NULL, makePD = FALSE, cov.weight.type = "none")
 {
 
@@ -257,7 +264,7 @@ PACE_S <- function(funDataObject, W, predData = NULL, nbasis = 10, pve = 0.99, n
 #' \item{functions}{An object of \code{\link[multifunData]{multifunData}}. }
 #' \item{scores}{ A vector of eigenvalues.}
 #' \item{vectors}{A matrix of eigenvectors.}
-#' \item{argvals}{}
+#' \item{argvals}{A vector of numerics, defining a grid on the interval for which the basis functions are computed}
 #' \item{meanFunction}{The estimated mean function.}
 #' \item{fit}{fit = TRUE returns an object of \code{\link[multifunData]{multifunData}} containing
 #'            the approximation of {X_i} using the mfasPCs with J components.}
