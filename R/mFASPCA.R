@@ -276,7 +276,7 @@ mfasPCA <- function(mData,W,J,fit = TRUE)
   mylist <- list()
   Function_pr <- list()
   moy <- list()
-  # weight matrix
+  # Weight matrix
   W <- (1/2)*(W+t(W))
   W <- W/sum(W)
   # Univariate FPCA
