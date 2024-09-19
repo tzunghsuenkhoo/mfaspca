@@ -1,5 +1,6 @@
 
-#' Title
+#' Calculation of Functional Moran's I. This function calculate the multivariate and bivariate functional Moran's I
+#' given a multivariate functional areal spatial data of the \code{\link[multifunData]{funData}} class.
 #'
 #' @param mData An object of of \code{\link[multifunData]{funData}} containing the multivariate
 #'              areal spatial functional data observed.
