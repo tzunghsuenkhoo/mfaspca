@@ -5,21 +5,23 @@
 #' @param mData An object of of \code{\link[multifunData]{funData}} containing the multivariate
 #'              areal spatial functional data observed.
 #' @param W     A spatial weight matrix
-#' @param mylist
-#' @param Function_pr
-#' @param k
-#' @param l
+#' @param k     The index for the first component to be used in the bivariate functional Moran's I
+#' @param l     The index for the second component to be used in the bivariate functional Moran's I
 #'
-#' @return
+#' @return  \item{FMMORAN}{}
+#' \item{BMMORAN}{}
 #' @export
 #'
 #' @examples
-FMORAN_I <- function(mData,W,mylist,Function_pr, k,l)
+FMORAN_I <- function(mData,W,k,l)
 {
   # number of components
   p <- length(mData)
   # number of observations
   N <- funData::nObs(mData)
+  # creating empty lists
+  mylist <- list()
+  Function_pr <- list()
   # calculating the functional Moran I
   Fpm   <- list()
   Tt    <- mData[[1]]@argvals[[1]]
@@ -27,10 +29,11 @@ FMORAN_I <- function(mData,W,mylist,Function_pr, k,l)
   Fpms2 <- matrix(0, nrow=length(Tt),ncol=p)
   ## functional Moran
   for(j in seq_len(p)) {
-    Tt       <- mData[[j]]@argvals[[1]]
-    vec      <- mylist[[j]]
-    FUNC     <- Function_pr[[j]]
-    Fpm[[j]] <- MFPCA::univExpansion(type = "default", scores =vec, functions = FUNC)
+    Tt               <- mData[[j]]@argvals[[1]]
+    FPCA_univ        <- PACE_S(funDataObject=mData[[j]], W, predData = NULL, nbasis = 15, pve = 0.99, npc = NULL, makePD = FALSE, cov.weight.type = "none")
+    mylist[[j]]      <- FPCA_univ[["scores"]]    # put all scores in the list
+    Function_pr[[j]] <- FPCA_univ[["functions"]]
+    Fpm[[j]]         <- MFPCA::univExpansion(type = "default", scores = mylist[[j]] , functions = Function_pr[[j]])
     for(i in c(Tt)) {
       Fpms1[i,j] = (t(Fpm[[j]]@X)[i,]%*%W%*%Fpm[[j]]@X[,i])
       Fpms2[i,j] = (t(Fpm[[j]]@X)[i,]%*%Fpm[[j]]@X[,i])
